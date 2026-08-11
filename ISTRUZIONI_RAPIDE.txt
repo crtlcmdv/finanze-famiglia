@@ -1,0 +1,40 @@
+⚡ SETUP VELOCE - 5 MINUTI
+
+1. GITHUB (2 min)
+   - Vai su https://github.com/signup (crea account)
+   - Vai su https://github.com/new
+   - Nome: "finanze-famiglia"
+   - Click "Create repository"
+
+2. CARICA I FILE (2 min)
+   - Nel repository, clicca "Add file" → "Upload files"
+   - Trascina TUTTI questi file/cartelle:
+     ✓ package.json
+     ✓ vite.config.js
+     ✓ index.html
+     ✓ src/ (cartella)
+     ✓ .gitignore
+   - Scrivi "Initial commit"
+   - Click "Commit changes"
+
+3. VERCEL (1 min)
+   - Vai su https://vercel.com/signup
+   - Click "Continue with GitHub"
+   - Seleziona il repository "finanze-famiglia"
+   - Click "Deploy"
+   - Attendi il deploy (2-3 minuti)
+   - Riceverai un URL come:
+     https://finanze-famiglia-xyz.vercel.app
+
+4. USA L'APP
+   - Condividi l'URL con tua moglie
+   - I dati si sincronizzano automaticamente
+   - I dati sono salvati nel vostro browser
+
+5. PER AGGIORNAMENTI
+   - Chiedi a Claude: "Aggiungi [feature]"
+   - Io aggiorno il codice su GitHub
+   - Vercel aggiorna automaticamente
+   - Ricari la pagina e vedi i cambiamenti
+
+✅ FATTO! L'app è online.
