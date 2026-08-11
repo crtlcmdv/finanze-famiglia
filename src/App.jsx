@@ -4,8 +4,26 @@ import { Trash2, Plus, Download } from 'lucide-react';
 import './App.css';
 
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState('');
+  const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+  const [loginError, setLoginError] = useState('');
   const [transactions, setTransactions] = useState([]);
   const [form, setForm] = useState({ date: '', description: '', amount: '', type: 'spesa', category: 'Cibo' });
+
+  const users = {
+    'Pupo': 'Tr0pic@lSunset2024!',
+    'Pupa': 'M0s@ic#Garden5789&'
+  };
+
+  // Carica lo stato di login da localStorage
+  useEffect(() => {
+    const savedUser = localStorage.getItem('loggedInUser');
+    if (savedUser) {
+      setCurrentUser(savedUser);
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   // Carica i dati da localStorage
   useEffect(() => {
@@ -61,6 +79,26 @@ export default function App() {
 
   const colors = ['#378ADD', '#639922', '#BA7517', '#1D9E75', '#534AB7', '#E24B4A'];
 
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (users[loginForm.username] === loginForm.password) {
+      setIsLoggedIn(true);
+      setCurrentUser(loginForm.username);
+      localStorage.setItem('loggedInUser', loginForm.username);
+      setLoginError('');
+      setLoginForm({ username: '', password: '' });
+    } else {
+      setLoginError('Username o password errati');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setCurrentUser('');
+    localStorage.removeItem('loggedInUser');
+    setLoginForm({ username: '', password: '' });
+  };
+
   const exportCSV = () => {
     const csv = [
       ['Data', 'Descrizione', 'Importo', 'Tipo', 'Categoria'].join(','),
@@ -75,13 +113,51 @@ export default function App() {
     a.click();
   };
 
+  // Schermata di login
+  if (!isLoggedIn) {
+    return (
+      <div className="login-container">
+        <div className="login-card">
+          <h1>💰 Finanze Famiglia</h1>
+          <form onSubmit={handleLogin}>
+            <h2>Accedi</h2>
+            <input
+              type="text"
+              placeholder="Username"
+              value={loginForm.username}
+              onChange={(e) => setLoginForm({...loginForm, username: e.target.value})}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={loginForm.password}
+              onChange={(e) => setLoginForm({...loginForm, password: e.target.value})}
+              required
+            />
+            {loginError && <p className="error-message">{loginError}</p>}
+            <button type="submit" className="btn-primary">Accedi</button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="container">
       <header className="header">
-        <h1>💰 Finanze Famiglia</h1>
-        <button onClick={exportCSV} className="export-btn">
-          <Download size={16} /> Esporta
-        </button>
+        <div>
+          <h1>💰 Finanze Famiglia</h1>
+          <p className="user-name">Ciao, {currentUser}!</p>
+        </div>
+        <div className="header-actions">
+          <button onClick={exportCSV} className="export-btn">
+            <Download size={16} /> Esporta
+          </button>
+          <button onClick={handleLogout} className="logout-btn">
+            Esci
+          </button>
+        </div>
       </header>
 
       <div className="cards-grid">
